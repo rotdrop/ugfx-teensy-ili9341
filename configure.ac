@@ -93,13 +93,13 @@ if test "${CXXFLAGS+set}" != set; then
   CXXFLAGS="-std=gnu++17 -Os -ggdb3 -Wall -felide-constructors -fno-exceptions -fno-rtti"
 fi
 
-AC_CANONICAL_BUILD
-AC_CANONICAL_HOST
-
 ac_save_LDFLAGS="$LDFLAGS"
 LDFLAGS="-nostdlib $LDFLAGS"
 LT_INIT([disable-shared])
 LDFLAGS="$ac_save_LDFLAGS"
+
+AC_CANONICAL_BUILD
+AC_CANONICAL_HOST
 
 # Checks for programs.
 AC_PROG_CC
@@ -111,7 +111,21 @@ AC_CHECK_TOOL([SIZE], [size])
 AC_CHECK_TOOL([OBJDUMP], [objdump])
 AC_CHECK_TOOL([OBJCOPY], [objcopy])
 
+m4_define(_LT_LANG_CXX_FOR_BUILD_CONFIG)
+AX_PROG_CC_FOR_BUILD
+AX_PROG_CXX_FOR_BUILD
+
+ac_save_link=$ac_link
+ac_save_LIBS=$LIBS
+LIBS=$LIBS_FOR_BUILD
+ac_link='$CC_FOR_BUILD -o conftest$BUILD_EXEEXT $CFLAGS_FOR_BUILD $CPPFLAGS_FOR_BUILD $LDFLAGS_FOR_BUILD conftest.$ac_ext $LIBS >&5'
+AC_CHECK_LIB(usb, usb_open, [LIBS_FOR_BUILD="$LIBS_FOR_BUILD -lusb"])
+ac_link=$ac_save_link
+LIBS=$ac_save_LIBS
+AC_SUBST([LIBS_FOR_BUILD])
+
 AC_CONFIG_FILES([Makefile
+                 tools/Makefile
                  src/Makefile])
 
 AC_OUTPUT
