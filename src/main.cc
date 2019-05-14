@@ -1,12 +1,12 @@
-#include "WProgram.h"
+#include <WProgram.h>
 
-extern "C" int main(void)
+int main(void)
 {
   pinMode(13, OUTPUT);
   while (1) {
     digitalWriteFast(13, HIGH);
-    delay(500);
+    delay(50);
     digitalWriteFast(13, LOW);
-    delay(500);
+    delay(5000);
   }
 }

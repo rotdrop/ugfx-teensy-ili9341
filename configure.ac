@@ -3,11 +3,12 @@
 
 AC_PREREQ(2.61)
 AC_INIT(teensy-3-6, 0.1, himself@claus-justus-heine.de)
-AC_CONFIG_SRCDIR([README])
+AC_CONFIG_SRCDIR([src/main.cc])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE([tar-ustar gnu 1.11 check-news dist-bzip2 dist-xz])
 AM_MAINTAINER_MODE
 AC_CONFIG_MACRO_DIR([m4])
+_AC_SRCDIRS([.])
 
 AH_TOP([
 /**@file
@@ -19,9 +20,24 @@ AH_TOP([
 ])
 AH_BOTTOM([/*@} AUTOCONF Doxygen group. */])
 
+AC_ARG_WITH([teensy-cores],
+  AC_HELP_STRING([--with-teensy-cores=DIR],
+    [Define to the base directory of the teensy-core project (default: ${ac_top_srcdir}/external/teensy-cores/).]),
+  [case "$withval" in
+	yes|no)
+	  AC_MSG_ERROR([We really need the location of the Teensy-core libraries, not ``yes'' or ``no'' or nothing.])
+	  ;;
+   	*)
+	  TEENSY_CORES="$withval"
+	  ;;
+  esac],
+  [TEENSY_CORES="\${top_srcdir}/external/teensy-cores"])
+AC_SUBST([TEENSY_CORES])
+AC_DEFINE_UNQUOTED([TEENSY_CORES], $TEENSY_CORES, [Location of the Teensy cores library.])
+
 AC_ARG_WITH([mcu],
   AC_HELP_STRING([--with-mcu=TARGET],
-    [Use TARGET as destination ARM MCU. Default is ``mk66fx1m0'']),
+    [Use TARGET as destination ARM microcontroller. Default is ``teensy-3.6'']),
   [case "$withval" in
 	yes|no)
 	  AC_MSG_ERROR([Need to specify the target MCU])
@@ -30,47 +46,60 @@ AC_ARG_WITH([mcu],
 	  MCU="$withval"
 	  ;;
   esac],
-  [MCU=mk66fx1m0])
+  [MCU=teensy-3.6])
 AC_SUBST([MCU])
+AC_DEFINE_UNQUOTED([MCU], "$MCU", [Define to the target MCU])
 
-LDSCRIPT=${MCU}.ld
-AC_SUBST([LDSCRIPT])
+cross_compiling=yes
 
-ARCHFLAGS="-specs=nano.specs -specs=nosys.specs"
+case "$MCU" in
+    teensy*)
+        ac_tool_prefix=arm-none-eabi-
+        host_alias=arm
+        MCU_FLAGS="-ffunction-sections -fdata-sections -DUSING_MAKEFILE -DUSB_SERIAL -DLAYOUT_US_ENGLISH"
+        MCU_LDFLAGS="-Wl,--gc-sections,--relax,--defsym=__rtc_localtime=0"
+        MCU_SPECS="-specs=\${top_srcdir}/specs/c-only-nano.specs"
+        ;;
+    *)
+        AC_MSG_ERROR([Unsupported MCU])
+        ;;
+esac
+
+case "$MCU" in
+    teensy-3.6)
+        MCU_LDSCRIPT="\${TEENSY_CORES}/teensy3/mk66fx1m0.ld"
+        F_CPU=180000000
+        MCU_FLAGS="-D__MK66FX1M0__ -march=armv7e-m+fp -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DF_CPU=${F_CPU} ${MCU_FLAGS}"
+        ;;
+    *)
+        AC_MSG_ERROR([Unsupported MCU])
+        ;;
+esac
+
+AC_SUBST(MCU_FLAGS)
+AC_SUBST(MCU_LDFLAGS)
+AC_SUBST(MCU_SPECS)
+AC_SUBST(MCU_LDSCRIPT)
+AC_SUBST(F_CPU)
+AC_DEFINE_UNQUOTED([F_CPU], $F_CPU, [Define to the CPU frequency of the uC])
+
+AM_CONDITIONAL([TEENSY_3_6], [test $MCU = "teensy-3.6"])
 
 if test "${CFLAGS+set}" != set; then
   CFLAGS="-Os -ggdb3 -Wall"
 fi
-CFLAGS="${ARCHFLAGS} ${CFLAGS}"
 
 if test "${CXXFLAGS+set}" != set; then
-  CXXFLAGS="-std=c++17 -Os -ggdb3 -Wall -Wno-unused-local-typedefs"
+  CXXFLAGS="-std=gnu++17 -Os -ggdb3 -Wall -felide-constructors -fno-exceptions -fno-rtti"
 fi
-CXXFLAGS="${ARCHFLAGS} ${CXXFLAGS}"
-
-LDFLAGS="${ARCHFLAGS} -Wl,--gc-sections,--relax -T${top_srcdir}/mk66fx1m0.ld"
-
-ac_tool_prefix=arm-none-eabi-
-host_alias=arm
-cross_compiling=yes
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
+
+ac_save_LDFLAGS="$LDFLAGS"
+LDFLAGS="-nostdlib $LDFLAGS"
 LT_INIT([disable-shared])
-
-case "$MCU" in
-    mk66fx1m0)
-    CC_MCU_DEFS=
-    LD_MCU_DEFS=
-    ;;
-    *)
-    AC_MSG_ERROR([Unsupported MCU])
-    ;;
-esac
-AC_SUBST([CC_MCU_DEFS])
-AC_SUBST([LD_MCU_DEFS])
-
-AM_CONDITIONAL([MK66FX1M0VMD18],[test $MCU = mk66fx1m0])
+LDFLAGS="$ac_save_LDFLAGS"
 
 # Checks for programs.
 AC_PROG_CC
@@ -82,12 +111,7 @@ AC_CHECK_TOOL([SIZE], [size])
 AC_CHECK_TOOL([OBJDUMP], [objdump])
 AC_CHECK_TOOL([OBJCOPY], [objcopy])
 
-# Checks for libraries.
-
-# Checks for header files.
-
-AC_HEADER_STDBOOL
-
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+                 src/Makefile])
 
 AC_OUTPUT
