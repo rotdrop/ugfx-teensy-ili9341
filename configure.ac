@@ -70,12 +70,14 @@ case "$MCU" in
         MCU_LDSCRIPT="\${TEENSY_CORES}/teensy3/mk66fx1m0.ld"
         F_CPU=180000000
         MCU_FLAGS="-D__MK66FX1M0__ -march=armv7e-m+fp -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DF_CPU=${F_CPU} ${MCU_FLAGS}"
+        MCU_TAG=TEENSY36
         ;;
     *)
         AC_MSG_ERROR([Unsupported MCU])
         ;;
 esac
 
+AC_SUBST(MCU_TAG)
 AC_SUBST(MCU_FLAGS)
 AC_SUBST(MCU_LDFLAGS)
 AC_SUBST(MCU_SPECS)

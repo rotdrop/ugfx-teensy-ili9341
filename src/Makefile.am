@@ -1,5 +1,7 @@
 DEFS = @DEFS@
 
+LOADER = $(top_builddir)/tools/teensy-loader
+
 AM_CPPFLAGS = \
  -I$(top_srcdir)/external/teensy-cores/teensy3 \
  -I$(top_srcdir)
@@ -72,18 +74,14 @@ SUFFIXES = .hex .lst
 clean-local:
 	rm -f *.hex *.lst
 
-post_compile: $(noinst_DATA)
-	true
-#	@$(abspath $(TOOLSPATH))/teensy_post_compile -file="$(basename $<)" -path=$(CURDIR) -tools="$(abspath $(TOOLSPATH))"
+reboot: $(LOADER)
+	$(LOADER) -v -s -b --mcu=$(MCU_TAG)
 
-reboot:
-	true
-#	@-$(abspath $(TOOLSPATH))/teensy_reboot
-
-upload: post_compile reboot
+upload: $(LOADER) $(noinst_DATA)
+	$(LOADER) -v -s -w --mcu=$(MCU_TAG) $(noinst_DATA)
 
 %.hex: %.elf
-	$(OBJCOPY) -O ihex -R .eeprom $< $@
+	$(OBJCOPY) -O ihex $< $@
 
 %.lst: %.elf
 	$(OBJDUMP) --disassemble -S $< > $@
