@@ -14,7 +14,9 @@ AM_CXXFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_CFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_LDFLAGS = @MCU_LDFLAGS@ -T"$(MCU_LDSCRIPT)"
 
-teensy36_elf_SOURCES = main.cc
+teensy36_elf_SOURCES =\
+ main.cc\
+ ftm.hh
 teensy36_elf_LDADD = libteensy3.a
 
 libteensy3_a_SOURCES =\
