@@ -3,12 +3,15 @@ DEFS = @DEFS@
 LOADER = $(top_builddir)/tools/teensy-loader
 
 AM_CPPFLAGS = \
- -I$(top_srcdir)/external/teensy-cores/teensy3 \
+ -I$(top_srcdir)/external/teensy-cores/teensy3ß\
+ -I$(top_srcdir)/external/i2c_t3\
  -I$(top_srcdir)
 
 noinst_PROGRAMS = teensy36.elf
 noinst_DATA = $(noinst_PROGRAMS:.elf=.hex)
-noinst_LIBRARIES = libteensy3.a
+noinst_LIBRARIES = \
+ libteensy3.a\
+ libi2c-t3.a
 
 AM_CXXFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_CFLAGS = @MCU_FLAGS@ @MCU_SPECS@
@@ -17,7 +20,13 @@ AM_LDFLAGS = @MCU_LDFLAGS@ -T"$(MCU_LDSCRIPT)"
 teensy36_elf_SOURCES =\
  main.cc\
  ftm.hh
-teensy36_elf_LDADD = libteensy3.a
+teensy36_elf_LDADD =\
+ libi2c-t3.a\
+ libteensy3.a
+
+libi2c_t3_a_SOURCES =\
+ $(top_srcdir)/external/i2c_t3/i2c_t3.cpp\
+ $(top_srcdir)/external/i2c_t3/i2c_t3.h
 
 libteensy3_a_SOURCES =\
  $(top_srcdir)/external/teensy-cores/teensy3/analog.c\
