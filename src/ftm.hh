@@ -49,6 +49,26 @@ namespace CJHTeensy
     static constexpr uint32_t addr[numInstances] = {
       0x40038000, 0x40039000, 0x400B8000, 0x400B9000
     };
+    static constexpr unsigned module[64] = {
+      ~0U, ~0U, 3, 1, 1, 0, 0, 3,       // 0 .. 7
+      3, 0, 0, ~0U, ~0U, ~0U, 3, ~0U,     // 8 .. 15
+      ~0U, ~0U, ~0U, ~0U, 0, 0, 0, 0,     // 16 .. 23
+      ~0U, ~0U, ~0U, ~0U, ~0U, 2, 2, ~0U,   // 24 .. 31
+      ~0U, ~0U, ~0U, 3, 3, 3, 3, ~0U,     // 32 .. 39
+      ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, // 40 .. 47
+      ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, // 48 .. 55
+      ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, // 56 .. 63
+    };
+    static constexpr unsigned channel[64] = {
+      ~0U, ~0U, 0, 0, 1, 7, 4, 2,       // 0 .. 7
+      3, 2, 3, ~0U, ~0U, ~0U, 1, ~0U,     // 8 .. 15
+      ~0U, ~0U, ~0U, ~0U, 5, 6, 0, 1,     // 16 .. 23
+      ~0U, ~0U, ~0U, ~0U, ~0U, 0, 1, ~0U,   // 24 .. 31
+      ~0U, ~0U, ~0U, 4, 5, 6, 7, ~0U,     // 32 .. 39
+      ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, // 40 .. 47
+      ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, // 48 .. 55
+      ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, // 56 .. 63
+    };
     static constexpr unsigned pins[numInstances][8] = {
       {
         CORE_FTM0_CH0_PIN, // ok, pin22

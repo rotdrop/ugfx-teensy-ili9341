@@ -7,9 +7,9 @@
 using CJHTeensy::FTMModule;
 
 class ServoController
-  : CJHTeensy::ServoController<true>
+  : CJHTeensy::ServoController
 {
-  using BaseType = CJHTeensy::ServoController<true>;
+  using BaseType = CJHTeensy::ServoController;
  protected:
   bool forward = true;
   unsigned tick = BaseType::tickCenter_;
