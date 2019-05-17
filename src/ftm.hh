@@ -51,32 +51,46 @@ namespace CJHTeensy
     };
     static constexpr unsigned pins[numInstances][8] = {
       {
-        CORE_FTM0_CH0_PIN, // PORTC_PCR1
-        CORE_FTM0_CH1_PIN, // PORTC_PCR2
-        CORE_FTM0_CH2_PIN, // PORTC_PCR3
-        CORE_FTM0_CH3_PIN, // PORTC_PCR4
-        CORE_FTM0_CH4_PIN, // PORTD_PCR4
-        CORE_FTM0_CH5_PIN, // PORTD_PCR5
-        CORE_FTM0_CH6_PIN, // PORTD_PCR6 
-        CORE_FTM0_CH7_PIN, // 
+        CORE_FTM0_CH0_PIN, // ok, pin22
+        CORE_FTM0_CH1_PIN, // ok, pin23
+        CORE_FTM0_CH2_PIN, // ok, pin9
+        CORE_FTM0_CH3_PIN, // ok, pin10
+        CORE_FTM0_CH4_PIN, // ok, pin6
+        CORE_FTM0_CH5_PIN, // ok, pin20
+        CORE_FTM0_CH6_PIN, // ok, pin21
+        CORE_FTM0_CH7_PIN, // ok, pin5
       },
       {
-        CORE_FTM1_CH0_PIN,
-        CORE_FTM1_CH1_PIN,
+        CORE_FTM1_CH0_PIN, // ok, pin3
+        CORE_FTM1_CH1_PIN, // ok, pin4
       },
       {
-        CORE_FTM2_CH0_PIN,
-        CORE_FTM2_CH1_PIN,
+        CORE_FTM2_CH0_PIN, // ok, pin29
+        CORE_FTM2_CH1_PIN, // ok, pin30
       },
       {
-        CORE_FTM3_CH0_PIN,
-        CORE_FTM3_CH1_PIN,
-        CORE_FTM3_CH2_PIN,
-        CORE_FTM3_CH3_PIN,
-        CORE_FTM3_CH4_PIN,
-        CORE_FTM3_CH5_PIN,
-        CORE_FTM3_CH6_PIN,
-        CORE_FTM3_CH7_PIN,
+        CORE_FTM3_CH0_PIN, // ok, pin2
+        CORE_FTM3_CH1_PIN, // ok, pin14
+        CORE_FTM3_CH2_PIN, // ok, pin7
+        CORE_FTM3_CH3_PIN, // ok, pin8
+        CORE_FTM3_CH4_PIN, // ok, pin35
+        CORE_FTM3_CH5_PIN, // ok, pin36
+        CORE_FTM3_CH6_PIN, // ok, pin37
+        CORE_FTM3_CH7_PIN, // ok, pin38
+      },
+    };
+    static constexpr unsigned pinMux[numInstances][8] = {
+      {
+        4, 4, 4, 4, 4, 4, 4, 4,
+      },
+      {
+        3, 3,
+      },
+      {
+        3, 3,
+      },
+      {
+        4, 4, 4, 4, 3, 3, 3, 3,
       },
     };
     static constexpr volatile FTMModule& instance(int id) 

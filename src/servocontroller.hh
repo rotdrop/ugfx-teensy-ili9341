@@ -49,7 +49,7 @@ namespace CJHTeensy {
           FTMModule::instance(i).CH[pin].SC &= ~FTM_CSC_CHIE;
           FTMModule::instance(i).CH[pin].SC = FTM_CSC_MSB|FTM_CSC_ELSB;
           FTMModule::instance(i).CH[pin].CV = 0; // tickCenter_; 
-          FTMModule::pinConfig(i, pin) = PORT_PCR_MUX(4) | PORT_PCR_DSE | PORT_PCR_SRE;
+          FTMModule::pinConfig(i, pin) = PORT_PCR_MUX(FTMModule::pinMux[i][pin]) | PORT_PCR_DSE | PORT_PCR_SRE;
         }
         FTMModule::instance(i).PWMLOAD |= FTM_PWMLOAD_LDOK;        
       }
