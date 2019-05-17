@@ -88,6 +88,61 @@ namespace CJHTeensy
       return CJHTeensy::pinConfig(pins[id][channel]);
     }
   };
-}
+
+  template<unsigned Id>
+  class FTMOverflow
+  {
+    static_assert(Id <= 3, "At most 4 FTM's are available");
+   protected:
+    template<unsigned Nr>
+    friend void ftmIsr();
+
+    static FTMOverflow* instance;
+    FTMOverflow* previous;
+    
+    FTMOverflow()
+      : previous(instance)
+    {
+      instance = this;
+    }
+
+    virtual ~FTMOverflow()
+    {
+      stop();
+      instance = previous;
+    }
+
+    static void start()
+    {
+      FTMModule::instance(Id).SC &= ~FTM_SC_TOF;
+      FTMModule::instance(Id).SC |= FTM_SC_TOIE;
+
+      switch (Id) {
+      case 0: NVIC_ENABLE_IRQ(IRQ_FTM0); break;
+      case 1: NVIC_ENABLE_IRQ(IRQ_FTM0); break;
+      case 2: NVIC_ENABLE_IRQ(IRQ_FTM0); break;
+      default:
+      case 3: NVIC_ENABLE_IRQ(IRQ_FTM0); break;
+      }
+    }
+
+    static void stop()
+    {
+      FTMModule::instance(Id).SC = 0;
+      
+      switch (Id) {
+      case 0: NVIC_DISABLE_IRQ(IRQ_FTM0); break;
+      case 1: NVIC_DISABLE_IRQ(IRQ_FTM0); break;
+      case 2: NVIC_DISABLE_IRQ(IRQ_FTM0); break;
+      default:
+      case 3: NVIC_DISABLE_IRQ(IRQ_FTM0); break;
+      }
+    }
+    
+    virtual void handler()
+    {}
+  };  
+
+} // CJHTeensy::
 
 #endif // __CJH_TEENSY_FTM_HH__

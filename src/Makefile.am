@@ -3,7 +3,7 @@ DEFS = @DEFS@
 LOADER = $(top_builddir)/tools/teensy-loader
 
 AM_CPPFLAGS = \
- -I$(top_srcdir)/external/teensy-cores/teensy3ß\
+ -I$(top_srcdir)/external/teensy-cores/teensy3\
  -I$(top_srcdir)/external/i2c_t3\
  -I$(top_srcdir)
 
@@ -19,7 +19,10 @@ AM_LDFLAGS = @MCU_LDFLAGS@ -T"$(MCU_LDSCRIPT)"
 
 teensy36_elf_SOURCES =\
  main.cc\
- ftm.hh
+ ftm.cc\
+ ftm.hh\
+ servocontroller.hh
+
 teensy36_elf_LDADD =\
  libi2c-t3.a\
  libteensy3.a
