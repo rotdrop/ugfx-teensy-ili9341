@@ -56,7 +56,7 @@ namespace CJHTeensy {
         FTMModule::instance(i).PWMLOAD |= FTM_PWMLOAD_LDOK;        
       }
       FTMModule::instance(0).CONF |= FTM_CONF_GTBEOUT;
-      start();
+      start(); // enable the overflow interrupt
     }
 
     virtual ~ServoController()
@@ -65,13 +65,6 @@ namespace CJHTeensy {
         FTMModule::instance(i).SC = 0; // disable
       }
       stop();
-    }
-
-    /**Callback called from the overflow interrupt. Typically should be used to update the duty-cycles.
-     */
-    virtual void atPeriodEnd()
-    {
-      return;
     }
   };
 
