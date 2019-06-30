@@ -7,7 +7,7 @@ AM_CPPFLAGS = \
  -I$(top_srcdir)/external/i2c_t3\
  -I$(top_srcdir)
 
-noinst_PROGRAMS = teensy36.elf
+noinst_PROGRAMS = teensy32-touchscreen-gui.elf
 noinst_DATA = $(noinst_PROGRAMS:.elf=.hex)
 noinst_LIBRARIES = \
  libteensy3.a\
@@ -17,13 +17,10 @@ AM_CXXFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_CFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_LDFLAGS = @MCU_LDFLAGS@ -T"$(MCU_LDSCRIPT)"
 
-teensy36_elf_SOURCES =\
- main.cc\
- ftm.cc\
- ftm.hh\
- servocontroller.hh
+teensy32_touchscreen_gui_elf_SOURCES =\
+ main.cc
 
-teensy36_elf_LDADD =\
+teensy32_touchscreen_gui_elf_LDADD =\
  libi2c-t3.a\
  libteensy3.a
 

@@ -1,45 +1,6 @@
 #include <WProgram.h>
 #include <i2c_t3.h>
 
-#include "pins.hh"
-#include "servocontroller.hh"
-
-using CJHTeensy::FTMModule;
-
-class ServoController
-  : CJHTeensy::ServoController
-{
-  using BaseType = CJHTeensy::ServoController;
- protected:
-  bool forward = true;
-  unsigned tick = BaseType::tickCenter_;
-  
-  virtual void handler(void)
-  {
-    for (int i = 0; i < FTMModule::numInstances; ++i) {
-      for (int pin = 0; pin < FTMModule::numChannels[i]; ++pin) {
-        if (forward) {
-          if (tick < ServoController::tickMax_) {
-            ++tick;
-          } else {
-            forward = !forward;
-          }
-        } else {
-          if (tick > ServoController::tickMin_) {
-            --tick;
-          } else {
-            forward = !forward;
-          }
-        }   
-        FTMModule::instance(i).CH[pin].CV = tick;
-      }
-      FTMModule::instance(i).PWMLOAD |= FTM_PWMLOAD_LDOK;
-    }
-  }
-};
-
-ServoController servos;
-
 extern "C" volatile uint32_t systick_millis_count;
 
 // Memory

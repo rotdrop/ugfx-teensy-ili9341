@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(teensy-3-6, 0.1, himself@claus-justus-heine.de)
+AC_INIT(teensy-touchscreen-gui, 0.1, himself@claus-justus-heine.de)
 AC_CONFIG_SRCDIR([src/main.cc])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE([tar-ustar gnu 1.11 check-news dist-bzip2 dist-xz])
@@ -37,7 +37,7 @@ AC_DEFINE_UNQUOTED([TEENSY_CORES], $TEENSY_CORES, [Location of the Teensy cores 
 
 AC_ARG_WITH([mcu],
   AC_HELP_STRING([--with-mcu=TARGET],
-    [Use TARGET as destination ARM microcontroller. Default is ``teensy-3.6'']),
+    [Use TARGET as destination ARM microcontroller. Default is ``teensy-3.2'']),
   [case "$withval" in
 	yes|no)
 	  AC_MSG_ERROR([Need to specify the target MCU])
@@ -46,7 +46,7 @@ AC_ARG_WITH([mcu],
 	  MCU="$withval"
 	  ;;
   esac],
-  [MCU=teensy-3.6])
+  [MCU=teensy-3.2])
 AC_SUBST([MCU])
 AC_DEFINE_UNQUOTED([MCU], "$MCU", [Define to the target MCU])
 
@@ -66,11 +66,11 @@ case "$MCU" in
 esac
 
 case "$MCU" in
-    teensy-3.6)
-        MCU_LDSCRIPT="\${TEENSY_CORES}/teensy3/mk66fx1m0.ld"
-        F_CPU=180000000
-        MCU_FLAGS="-D__MK66FX1M0__ -march=armv7e-m+fp -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DF_CPU=${F_CPU} ${MCU_FLAGS}"
-        MCU_TAG=TEENSY36
+    teensy-3.2)
+        MCU_LDSCRIPT="\${TEENSY_CORES}/teensy3/mk20dx256.ld"
+        F_CPU=72000000
+        MCU_FLAGS="-D__MK20DX256__ -march=armv7e-m -mthumb -mcpu=cortex-m4 -DF_CPU=${F_CPU} ${MCU_FLAGS}"
+        MCU_TAG=TEENSY32
         ;;
     *)
         AC_MSG_ERROR([Unsupported MCU])
