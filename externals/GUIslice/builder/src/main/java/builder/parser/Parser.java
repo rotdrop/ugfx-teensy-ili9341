@@ -1578,11 +1578,11 @@ public class Parser {
       token = tokenizer.nextToken();
       if (token.getType() != Parser.WORD) parseError("gauge style"); 
       if (token.getToken().equals("GSLCX_GAUGE_STYLE_RAMP"))
-        node.setGaugeStyle(token.getToken());
+        node.setGaugeStyle("Ramp");
       else if (token.getToken().equals("GSLCX_GAUGE_STYLE_PROG_BAR"))
-        node.setGaugeStyle(token.getToken());
+        node.setGaugeStyle("Bar");
       else if (token.getToken().equals("GSLCX_GAUGE_STYLE_RADIAL"))
-        node.setGaugeStyle(token.getToken());
+        node.setGaugeStyle("Radial");
       else
         parseError("gauge style");
       parse_EOS();
