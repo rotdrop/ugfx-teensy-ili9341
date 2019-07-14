@@ -1,0 +1,4 @@
+[submodule "externals/GUIslice"]
+	path = externals/GUIslice
+	url = git@github.com:rotdrop/GUIslice.git
+	branch = master
