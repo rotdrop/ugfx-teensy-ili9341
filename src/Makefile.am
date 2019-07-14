@@ -8,6 +8,8 @@ AM_CPPFLAGS = \
  -I$(top_srcdir)/externals/GUIslice/src\
  -I$(top_srcdir)/externals/Adafruit-GFX\
  -I$(top_srcdir)/externals/ILI9341_t3\
+ -I$(top_srcdir)/externals/SPI\
+ -I$(top_srcdir)/externals/SD\
  -I$(top_srcdir)\
  -DARDUINO=10805
 
@@ -29,6 +31,8 @@ teensy32_touchscreen_gui_elf_SOURCES =\
 teensy32_touchscreen_gui_elf_LDADD =\
  libGUIslice.a\
  libILI9341_t3.a\
+ libSPI.a\
+ libSD.a\
  libi2c-t3.a\
  libteensy3.a
 
@@ -145,6 +149,36 @@ libILI9341_t3_a_SOURCES =\
  $(top_srcdir)/externals/ILI9341_t3/glcdfont.c\
  $(top_srcdir)/externals/ILI9341_t3/ILI9341_t3.cpp\
  $(top_srcdir)/externals/ILI9341_t3/ILI9341_t3.h
+
+libSPI_a_SOURCES =\
+ $(top_srcdir)/externals/SPI/SPI.cpp\
+ $(top_srcdir)/externals/SPI/SPI.h
+
+libSD_a_SOURCES =\
+ $(top_srcdir)/externals/SPI/cache_t3.cpp\
+ $(top_srcdir)/externals/SPI/card_t3.cpp\
+ $(top_srcdir)/externals/SPI/dir_t3.cpp\
+ $(top_srcdir)/externals/SPI/examples\
+ $(top_srcdir)/externals/SPI/fat_t3.cpp\
+ $(top_srcdir)/externals/SPI/File.cpp\
+ $(top_srcdir)/externals/SPI/file_t3.cpp\
+ $(top_srcdir)/externals/SPI/init_t3.cpp\
+ $(top_srcdir)/externals/SPI/SD.cpp\
+ $(top_srcdir)/externals/SPI/SD.h\
+ $(top_srcdir)/externals/SPI/SD_t3.h\
+ $(top_srcdir)/externals/SPI/utility/FatStructs.h\
+ $(top_srcdir)/externals/SPI/utility/ioreg.h\
+ $(top_srcdir)/externals/SPI/utility/NXP_SDHC.cpp\
+ $(top_srcdir)/externals/SPI/utility/NXP_SDHC.h\
+ $(top_srcdir)/externals/SPI/utility/Sd2Card.cpp\
+ $(top_srcdir)/externals/SPI/utility/Sd2Card.h\
+ $(top_srcdir)/externals/SPI/utility/Sd2PinMap.h\
+ $(top_srcdir)/externals/SPI/utility/SdFat.h\
+ $(top_srcdir)/externals/SPI/utility/SdFatmainpage.h\
+ $(top_srcdir)/externals/SPI/utility/SdFatUtil.h\
+ $(top_srcdir)/externals/SPI/utility/SdFile.cpp\
+ $(top_srcdir)/externals/SPI/utility/SdInfo.h\
+ $(top_srcdir)/externals/SPI/utility/SdVolume.cpp
 
 SUFFIXES = .hex .lst
 
