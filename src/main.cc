@@ -1,5 +1,6 @@
 #include <WProgram.h>
-#include <i2c_t3.h>
+//#include <i2c_t3.h>
+#include "data/guislice/guislice.ino"
 
 extern "C" volatile uint32_t systick_millis_count;
 
@@ -11,53 +12,19 @@ uint8_t target = 0x77; // target Slave address
 
 int main(void)
 {
-  Serial.begin(9600);
+  setup();
+  
   pinMode(LED_BUILTIN, OUTPUT);
 
-  // Setup for Master mode, pins 18/19, external pullups, 400kHz, 200ms default timeout
-  Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, 400000);
-  Wire.setDefaultTimeout(200000); // 200ms
-  
   while (1) {
     while (auto x = Serial.available()) {
       Serial.read();
       Serial.println("serial input");
       Serial.println(x, DEC);
     }
-    Serial.println("Teensy 3.6");
+    Serial.println("Teensy 3.2 GUI");
 
-    // Construct data message
-    sprintf(databuf, "Data Message #%d", count++);
-
-    // Print message
-    Serial.printf("Sending to Slave: '%s' ", databuf);
-        
-    // Transmit to Slave
-    Wire.beginTransmission(target);   // Slave address
-    Wire.write(databuf,strlen(databuf)+1); // Write string to I2C Tx buffer (incl. string null at end)
-    Wire.endTransmission();           // Transmit to Slave
-
-    // Check if error occured
-    if(Wire.getError()) {
-      Serial.println("FAIL\n");
-    } else {
-      Serial.println("OK\n");
-    }
-
-    // Print message
-    Serial.print("Reading from Slave: ");
-        
-    // Read from Slave
-    Wire.requestFrom(target, (size_t)MEM_LEN); // Read from Slave (string len unknown, request full buffer)
-    
-    // Check if error occured
-    if(Wire.getError()) {
-      Serial.print("FAIL\n");
-    } else {
-      // If no error then read Rx data into buffer and print
-      Wire.read(databuf, Wire.available());
-      Serial.printf("'%s' OK\n",databuf);
-    }
+    loop();
     
     digitalWriteFast(LED_BUILTIN, HIGH);
     delay(50);
