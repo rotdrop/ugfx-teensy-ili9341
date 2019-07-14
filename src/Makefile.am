@@ -3,8 +3,9 @@ DEFS = @DEFS@
 LOADER = $(top_builddir)/tools/teensy-loader
 
 AM_CPPFLAGS = \
- -I$(top_srcdir)/external/teensy-cores/teensy3\
- -I$(top_srcdir)/external/i2c_t3\
+ -I$(top_srcdir)/externals/teensy-cores/teensy3\
+ -I$(top_srcdir)/externals/i2c_t3\
+ -I$(top_srcdir)/externals/GUIslice/src\
  -I$(top_srcdir)
 
 noinst_PROGRAMS = teensy32-touchscreen-gui.elf
@@ -25,60 +26,60 @@ teensy32_touchscreen_gui_elf_LDADD =\
  libteensy3.a
 
 libi2c_t3_a_SOURCES =\
- $(top_srcdir)/external/i2c_t3/i2c_t3.cpp\
- $(top_srcdir)/external/i2c_t3/i2c_t3.h
+ $(top_srcdir)/externals/i2c_t3/i2c_t3.cpp\
+ $(top_srcdir)/externals/i2c_t3/i2c_t3.h
 
 libteensy3_a_SOURCES =\
- $(top_srcdir)/external/teensy-cores/teensy3/analog.c\
- $(top_srcdir)/external/teensy-cores/teensy3/eeprom.c\
- $(top_srcdir)/external/teensy-cores/teensy3/keylayouts.c\
- $(top_srcdir)/external/teensy-cores/teensy3/math_helper.c\
- $(top_srcdir)/external/teensy-cores/teensy3/mk20dx128.c\
- $(top_srcdir)/external/teensy-cores/teensy3/nonstd.c\
- $(top_srcdir)/external/teensy-cores/teensy3/pins_teensy.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial1.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial2.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial3.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial4.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial5.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial6.c\
- $(top_srcdir)/external/teensy-cores/teensy3/serial6_lpuart.c\
- $(top_srcdir)/external/teensy-cores/teensy3/ser_print.c\
- $(top_srcdir)/external/teensy-cores/teensy3/touch.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_desc.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_dev.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_joystick.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_keyboard.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_mem.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_midi.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_mouse.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_mtp.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_rawhid.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_seremu.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_serial.c\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_touch.c\
- $(top_srcdir)/external/teensy-cores/teensy3/AudioStream.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/avr_emulation.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/DMAChannel.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/EventResponder.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/HardwareSerial1.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/HardwareSerial2.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/HardwareSerial3.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/HardwareSerial4.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/HardwareSerial5.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/HardwareSerial6.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/IntervalTimer.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/IPAddress.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/new.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/Print.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/Stream.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/Tone.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_audio.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_flightsim.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/usb_inst.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/WMath.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/WString.cpp\
- $(top_srcdir)/external/teensy-cores/teensy3/yield.cpp
+ $(top_srcdir)/externals/teensy-cores/teensy3/analog.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/eeprom.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/keylayouts.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/math_helper.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/mk20dx128.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/nonstd.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/pins_teensy.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial1.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial2.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial3.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial4.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial5.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial6.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/serial6_lpuart.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/ser_print.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/touch.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_desc.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_dev.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_joystick.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_keyboard.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_mem.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_midi.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_mouse.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_mtp.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_rawhid.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_seremu.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_serial.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_touch.c\
+ $(top_srcdir)/externals/teensy-cores/teensy3/AudioStream.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/avr_emulation.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/DMAChannel.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/EventResponder.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/HardwareSerial1.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/HardwareSerial2.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/HardwareSerial3.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/HardwareSerial4.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/HardwareSerial5.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/HardwareSerial6.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/IntervalTimer.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/IPAddress.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/new.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/Print.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/Stream.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/Tone.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_audio.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_flightsim.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/usb_inst.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/WMath.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/WString.cpp\
+ $(top_srcdir)/externals/teensy-cores/teensy3/yield.cpp
 
 SUFFIXES = .hex .lst
 

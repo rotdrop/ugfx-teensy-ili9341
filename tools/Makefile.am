@@ -5,6 +5,5 @@ LIBS = $(LIBS_FOR_BUILD)
 
 noinst_PROGRAMS = teensy-loader
 
-teensy_loader_SOURCES = $(top_srcdir)/external/teensy-loader/teensy_loader_cli.c
+teensy_loader_SOURCES = $(top_srcdir)/externals/teensy-loader/teensy_loader_cli.c
 teensy_loader_CPPFLAGS = -DUSE_LIBUSB
-

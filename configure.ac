@@ -22,7 +22,7 @@ AH_BOTTOM([/*@} AUTOCONF Doxygen group. */])
 
 AC_ARG_WITH([teensy-cores],
   AC_HELP_STRING([--with-teensy-cores=DIR],
-    [Define to the base directory of the teensy-core project (default: ${ac_top_srcdir}/external/teensy-cores/).]),
+    [Define to the base directory of the teensy-core project (default: ${ac_top_srcdir}/externals/teensy-cores/).]),
   [case "$withval" in
 	yes|no)
 	  AC_MSG_ERROR([We really need the location of the Teensy-core libraries, not ``yes'' or ``no'' or nothing.])
@@ -31,7 +31,7 @@ AC_ARG_WITH([teensy-cores],
 	  TEENSY_CORES="$withval"
 	  ;;
   esac],
-  [TEENSY_CORES="\${top_srcdir}/external/teensy-cores"])
+  [TEENSY_CORES="\${top_srcdir}/externals/teensy-cores"])
 AC_SUBST([TEENSY_CORES])
 AC_DEFINE_UNQUOTED([TEENSY_CORES], $TEENSY_CORES, [Location of the Teensy cores library.])
 
