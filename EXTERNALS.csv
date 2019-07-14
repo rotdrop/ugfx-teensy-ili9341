@@ -6,3 +6,5 @@ externals/teensy-loader;master;https://github.com/PaulStoffregen/teensy_loader_c
 externals/i2c_t3;master;https://github.com/nox771/i2c_t3.git;subtree
 externals/GUIslice;master;https://github.com/ImpulseAdventure/GUIslice.git;subtree
 externals/Adafruit-GFX;master;https://github.com/adafruit/Adafruit-GFX-Library.git;subtree
+externals/SPI;master;https://github.com/PaulStoffregen/SPI.git;subtree
+externals/SD;master;https://github.com/PaulStoffregen/SD.git;subtree
