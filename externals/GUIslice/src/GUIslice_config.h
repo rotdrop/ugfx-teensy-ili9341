@@ -67,7 +67,6 @@ extern "C" {
   //#include "../configs/ard-shld-adafruit_28_res.h"
   //#include "../configs/ard-shld-elegoo_28_res.h"
   //#include "../configs/ard-shld-generic1_35_touch.h"
-  //#include "../configs/ard-shld-ili9341_16b_touch.h"
   //#include "../configs/ard-shld-mcufriend.h"
   //#include "../configs/ard-shld-mcufriend_4wire.h"
   //#include "../configs/ard-shld-mcufriend_xpt2046.h"
@@ -88,8 +87,6 @@ extern "C" {
   //#include "../configs/ard-adagfx-ra8875-notouch.h"
   //#include "../configs/ard-adagfx-ssd1306-notouch.h"
   //#include "../configs/ard-adagfx-st7735-notouch.h"
-  //#include "../configs/due-adagfx-ili9341-ft6206.h"
-  //#include "../configs/due-adagfx-ili9341-urtouch.h"
 
   // ESP8266, ESP32, M5stack, TTGO:
   // ------------------------------------------------------
@@ -108,6 +105,7 @@ extern "C" {
   //#include "../configs/teensy-adagfx-ili9341-xpt2046-audio.h"
   //#include "../configs/teensy-adagfx-ili9341_t3-xpt2046.h"
   //#include "../configs/teensy-adagfx-ili9341_t3-xpt2046-audio.h"
+  #include "../configs/teensy-adagfx-ili9341_t3-simple.h"
 
   // STM32:
   // ------------------------------------------------------
