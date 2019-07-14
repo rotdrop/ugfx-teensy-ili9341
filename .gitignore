@@ -25,3 +25,6 @@ m4/lt~obsolete.m4
 **.a
 **.elf
 **.hex
+**.bak
+**backup
+**logs
