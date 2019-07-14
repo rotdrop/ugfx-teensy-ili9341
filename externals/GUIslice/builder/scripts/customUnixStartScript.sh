@@ -8,7 +8,7 @@
 
 # APP_HOME is set by the install.sh
 APP_HOME=<APPHOME>
-cd "\$APPHOME"
+cd "\$APP_HOME"
 
 APP_NAME="${applicationName}"
 APP_BASE_NAME=`basename "\$0"`
