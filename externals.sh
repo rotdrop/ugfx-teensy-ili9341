@@ -21,7 +21,7 @@ function createExternal ()
 }
 
 while IFS=\; read LOCALPATH BRANCH REMOTE TYPE ; do
-    if [ "$LOCALPATH" = "LOCALPATH" ]; then
+    if [ "$LOCALPATH" = "PATH" ]; then
         continue
     fi
     echo "$LOCALPATH;$BRANCH;$REMOTE;$TYPE"
