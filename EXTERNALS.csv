@@ -8,3 +8,4 @@ externals/GUIslice;master;https://github.com/ImpulseAdventure/GUIslice.git;subtr
 externals/Adafruit-GFX;master;https://github.com/adafruit/Adafruit-GFX-Library.git;subtree
 externals/SPI;master;https://github.com/PaulStoffregen/SPI.git;subtree
 externals/SD;master;https://github.com/PaulStoffregen/SD.git;subtree
+externals/Touchscreen;master;https://github.com/adafruit/Adafruit_TouchScreen.git;subtree
