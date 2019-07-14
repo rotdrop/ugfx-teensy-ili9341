@@ -33,7 +33,7 @@ import builder.mementos.Memento;
  * <p>
  * The pattern intends to encapsulate in an object all the data required 
  * for performing a given action (command), including what method to call, 
- * the method’s arguments, and the object to which the method belongs.
+ * the method's arguments, and the object to which the method belongs.
  * </p>
  * <p>
  * However, instead of following this pattern exactly, it will be extended

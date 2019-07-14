@@ -43,7 +43,7 @@ import builder.views.ToolBar;
  * </p>  
  * <p>  
  * Each Command Object will have one internal Memento Object. The memento will have saved 
- * the “original” state of any objects required to restore the project back before  
+ * the "original" state of any objects required to restore the project back before  
  * a command was executed. Thus, to undo any command we simply pop it off the
  * undo stack and call command.restore() method which is actually implemented 
  * by the internal memento object held inside the command.  This will cause all 
