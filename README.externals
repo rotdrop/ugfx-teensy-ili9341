@@ -1,0 +1,7 @@
+PATH;BRANCH;REMOTE
+externals/teensy-cores;master;https://github.com/PaulStoffregen/cores.git 
+externals/ILI9341_t3;master;https://github.com/PaulStoffregen/ILI9341_t3.git
+externals/ILI9341_fonts;master;https://github.com/PaulStoffregen/ILI9341_fonts.git
+externals/teensy-loader;master;https://github.com/PaulStoffregen/teensy_loader_cli.git
+externals/i2c_t3;master;https://github.com/nox771/i2c_t3.git
+externals/GUIslice;master;git@github.com:rotdrop/GUIslice.git
