@@ -10,11 +10,22 @@ char databuf[MEM_LEN];
 int count;
 uint8_t target = 0x77; // target Slave address
 
+#define TFT_CS 10
+#define SD_CS 15
+
 int main(void)
 {
-  setup();
-  
   pinMode(LED_BUILTIN, OUTPUT);
+
+  digitalWrite(SD_CS, HIGH);
+  pinMode(SD_CS, OUTPUT);
+  digitalWrite(SD_CS, HIGH);
+
+  digitalWrite(TFT_CS, HIGH);
+  pinMode(TFT_CS, OUTPUT);
+  digitalWrite(TFT_CS, HIGH);
+
+  setup();
 
   while (1) {
     while (auto x = Serial.available()) {
@@ -22,13 +33,15 @@ int main(void)
       Serial.println("serial input");
       Serial.println(x, DEC);
     }
-    Serial.println("Teensy 3.2 GUI");
+    //Serial.println("Teensy 3.2 GUI");
 
     loop();
-    
+
+#if 0
     digitalWriteFast(LED_BUILTIN, HIGH);
     delay(50);
     digitalWriteFast(LED_BUILTIN, LOW);
     delay(4950);
+#endif
   }
 }
