@@ -10,8 +10,11 @@ AM_CPPFLAGS = \
  -I$(top_srcdir)/externals/ILI9341_t3\
  -I$(top_srcdir)/externals/SPI\
  -I$(top_srcdir)/externals/SD\
+ -I$(top_srcdir)/externals/SD/utility\
+ -I$(top_srcdir)/externals/Touchscreen\
  -I$(top_srcdir)\
- -DARDUINO=10805
+ -DARDUINO=10805\
+ -DTEENSYDUINO
 
 noinst_PROGRAMS = teensy32-touchscreen-gui.elf
 noinst_DATA = $(noinst_PROGRAMS:.elf=.hex)
@@ -19,6 +22,9 @@ noinst_LIBRARIES = \
  libteensy3.a\
  libi2c-t3.a\
  libGUIslice.a\
+ libSPI.a\
+ libSD.a\
+ libTouchscreen.a\
  libILI9341_t3.a
 
 AM_CXXFLAGS = @MCU_FLAGS@ @MCU_SPECS@
@@ -33,6 +39,7 @@ teensy32_touchscreen_gui_elf_LDADD =\
  libILI9341_t3.a\
  libSPI.a\
  libSD.a\
+ libTouchscreen.a\
  libi2c-t3.a\
  libteensy3.a
 
@@ -114,32 +121,32 @@ $(top_srcdir)/externals/GUIslice/src/GUIslice_th.cpp\
 $(top_srcdir)/externals/GUIslice/src/GUIslice_th.h\
 $(top_srcdir)/externals/GUIslice/src/GUIslice_th_XPT2046.h\
 $(top_srcdir)/externals/GUIslice/src/GUIslice_version.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XCheckbox.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XCheckbox.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XGauge.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XGauge.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XGraph.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XGraph.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XKeyPad_Alpha.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XKeyPad_Alpha.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XKeyPad.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XKeyPad.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XKeyPad_Num.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XKeyPad_Num.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XListbox.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XListbox.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XRingGauge.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XRingGauge.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XSelNum.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XSelNum.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XSlider.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XSlider.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XSpinner.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XSpinner.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XTemplate.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XTemplate.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XTextbox.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice/elem/XTextbox.h
+$(top_srcdir)/externals/GUIslice/src/elem/XCheckbox.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XCheckbox.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XGauge.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XGauge.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XGraph.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XGraph.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Alpha.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Alpha.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Num.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Num.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XListbox.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XListbox.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XRingGauge.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XRingGauge.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XSelNum.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XSelNum.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XSlider.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XSlider.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XSpinner.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XSpinner.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XTemplate.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XTemplate.h\
+$(top_srcdir)/externals/GUIslice/src/elem/XTextbox.c\
+$(top_srcdir)/externals/GUIslice/src/elem/XTextbox.h
 
 libILI9341_t3_a_SOURCES =\
  $(top_srcdir)/externals/ILI9341_t3/font_ArialBold.c\
@@ -155,30 +162,34 @@ libSPI_a_SOURCES =\
  $(top_srcdir)/externals/SPI/SPI.h
 
 libSD_a_SOURCES =\
- $(top_srcdir)/externals/SPI/cache_t3.cpp\
- $(top_srcdir)/externals/SPI/card_t3.cpp\
- $(top_srcdir)/externals/SPI/dir_t3.cpp\
- $(top_srcdir)/externals/SPI/examples\
- $(top_srcdir)/externals/SPI/fat_t3.cpp\
- $(top_srcdir)/externals/SPI/File.cpp\
- $(top_srcdir)/externals/SPI/file_t3.cpp\
- $(top_srcdir)/externals/SPI/init_t3.cpp\
- $(top_srcdir)/externals/SPI/SD.cpp\
- $(top_srcdir)/externals/SPI/SD.h\
- $(top_srcdir)/externals/SPI/SD_t3.h\
- $(top_srcdir)/externals/SPI/utility/FatStructs.h\
- $(top_srcdir)/externals/SPI/utility/ioreg.h\
- $(top_srcdir)/externals/SPI/utility/NXP_SDHC.cpp\
- $(top_srcdir)/externals/SPI/utility/NXP_SDHC.h\
- $(top_srcdir)/externals/SPI/utility/Sd2Card.cpp\
- $(top_srcdir)/externals/SPI/utility/Sd2Card.h\
- $(top_srcdir)/externals/SPI/utility/Sd2PinMap.h\
- $(top_srcdir)/externals/SPI/utility/SdFat.h\
- $(top_srcdir)/externals/SPI/utility/SdFatmainpage.h\
- $(top_srcdir)/externals/SPI/utility/SdFatUtil.h\
- $(top_srcdir)/externals/SPI/utility/SdFile.cpp\
- $(top_srcdir)/externals/SPI/utility/SdInfo.h\
- $(top_srcdir)/externals/SPI/utility/SdVolume.cpp
+ $(top_srcdir)/externals/SD/cache_t3.cpp\
+ $(top_srcdir)/externals/SD/card_t3.cpp\
+ $(top_srcdir)/externals/SD/dir_t3.cpp\
+ $(top_srcdir)/externals/SD/examples\
+ $(top_srcdir)/externals/SD/fat_t3.cpp\
+ $(top_srcdir)/externals/SD/File.cpp\
+ $(top_srcdir)/externals/SD/file_t3.cpp\
+ $(top_srcdir)/externals/SD/init_t3.cpp\
+ $(top_srcdir)/externals/SD/SD.cpp\
+ $(top_srcdir)/externals/SD/SD.h\
+ $(top_srcdir)/externals/SD/SD_t3.h\
+ $(top_srcdir)/externals/SD/utility/FatStructs.h\
+ $(top_srcdir)/externals/SD/utility/ioreg.h\
+ $(top_srcdir)/externals/SD/utility/NXP_SDHC.cpp\
+ $(top_srcdir)/externals/SD/utility/NXP_SDHC.h\
+ $(top_srcdir)/externals/SD/utility/Sd2Card.cpp\
+ $(top_srcdir)/externals/SD/utility/Sd2Card.h\
+ $(top_srcdir)/externals/SD/utility/Sd2PinMap.h\
+ $(top_srcdir)/externals/SD/utility/SdFat.h\
+ $(top_srcdir)/externals/SD/utility/SdFatmainpage.h\
+ $(top_srcdir)/externals/SD/utility/SdFatUtil.h\
+ $(top_srcdir)/externals/SD/utility/SdFile.cpp\
+ $(top_srcdir)/externals/SD/utility/SdInfo.h\
+ $(top_srcdir)/externals/SD/utility/SdVolume.cpp
+
+libTouchscreen_a_SOURCES =\
+ $(top_srcdir)/externals/Touchscreen/TouchScreen.cpp\
+ $(top_srcdir)/externals/Touchscreen/TouchScreen.h
 
 SUFFIXES = .hex .lst
 
