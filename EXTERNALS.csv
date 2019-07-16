@@ -3,9 +3,8 @@ externals/teensy-cores;master;https://github.com/PaulStoffregen/cores.git;subtre
 externals/ILI9341_t3;master;https://github.com/PaulStoffregen/ILI9341_t3.git;subtree
 externals/ILI9341_fonts;master;https://github.com/PaulStoffregen/ILI9341_fonts.git;subtree
 externals/teensy-loader;master;https://github.com/PaulStoffregen/teensy_loader_cli.git;subtree
-externals/i2c_t3;master;https://github.com/nox771/i2c_t3.git;subtree
-externals/GUIslice;master;https://github.com/ImpulseAdventure/GUIslice.git;subtree
 externals/Adafruit-GFX;master;https://github.com/adafruit/Adafruit-GFX-Library.git;subtree
 externals/SPI;master;https://github.com/PaulStoffregen/SPI.git;subtree
 externals/SD;master;https://github.com/PaulStoffregen/SD.git;subtree
-externals/Touchscreen;master;https://github.com/adafruit/Adafruit_TouchScreen.git;subtree
+externals/TouchScreen;master;https://github.com/adafruit/Adafruit_TouchScreen.git;subtree
+externals/ugfx;master;https://git.ugfx.io/uGFX/uGFX.git;subtree
