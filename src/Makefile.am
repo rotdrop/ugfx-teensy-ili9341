@@ -11,7 +11,7 @@ AM_CPPFLAGS = \
  -I$(top_srcdir)/externals/SPI\
  -I$(top_srcdir)/externals/SD\
  -I$(top_srcdir)/externals/SD/utility\
- -I$(top_srcdir)/externals/Touchscreen\
+ -I$(top_srcdir)/externals/TouchScreen\
  -I$(top_srcdir)\
  -DARDUINO=10805\
  -DTEENSYDUINO
@@ -21,11 +21,11 @@ noinst_DATA = $(noinst_PROGRAMS:.elf=.hex)
 noinst_LIBRARIES = \
  libteensy3.a\
  libi2c-t3.a\
- libGUIslice.a\
  libSPI.a\
  libSD.a\
- libTouchscreen.a\
- libILI9341_t3.a
+ libTouchScreen.a\
+ libILI9341_t3.a\
+ libugfx.a
 
 AM_CXXFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_CFLAGS = @MCU_FLAGS@ @MCU_SPECS@
@@ -33,15 +33,21 @@ AM_LDFLAGS = @MCU_LDFLAGS@ -T"$(MCU_LDSCRIPT)"
 
 teensy32_touchscreen_gui_elf_SOURCES =\
  main.cc
-
 teensy32_touchscreen_gui_elf_LDADD =\
- libGUIslice.a\
+ libugfx.a\
  libILI9341_t3.a\
  libSPI.a\
  libSD.a\
- libTouchscreen.a\
+ libTouchScreen.a\
  libi2c-t3.a\
  libteensy3.a
+
+include ugfx.automake
+$(srcdir)/ugfx.automake: $(top_srcdir)/ugfx.mk
+	make -C $(top_srcdir) -f $< > $@
+
+libugfx_a_SOURCES = $(UGFXSRC)
+libugfx_a_CPPFLAGS = $(UGFXDEFS)
 
 libi2c_t3_a_SOURCES =\
  $(top_srcdir)/externals/i2c_t3/i2c_t3.cpp\
@@ -99,55 +105,6 @@ libteensy3_a_SOURCES =\
  $(top_srcdir)/externals/teensy-cores/teensy3/WString.cpp\
  $(top_srcdir)/externals/teensy-cores/teensy3/yield.cpp
 
-libGUIslice_a_SOURCES =\
-$(top_srcdir)/externals/GUIslice/src/GUIslice.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_config_ard.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_config.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_config_linux.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_adagfx.cpp\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_adagfx.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_m5stack.cpp\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_m5stack.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_sdl.c\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_sdl.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_tft_espi.cpp\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_tft_espi.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_utft.cpp\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_drv_utft.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_ex.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_th.cpp\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_th.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_th_XPT2046.h\
-$(top_srcdir)/externals/GUIslice/src/GUIslice_version.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XCheckbox.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XCheckbox.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XGauge.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XGauge.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XGraph.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XGraph.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Alpha.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Alpha.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Num.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XKeyPad_Num.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XListbox.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XListbox.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XRingGauge.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XRingGauge.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XSelNum.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XSelNum.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XSlider.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XSlider.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XSpinner.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XSpinner.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XTemplate.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XTemplate.h\
-$(top_srcdir)/externals/GUIslice/src/elem/XTextbox.c\
-$(top_srcdir)/externals/GUIslice/src/elem/XTextbox.h
-
 libILI9341_t3_a_SOURCES =\
  $(top_srcdir)/externals/ILI9341_t3/font_ArialBold.c\
  $(top_srcdir)/externals/ILI9341_t3/font_ArialBold.h\
@@ -187,9 +144,9 @@ libSD_a_SOURCES =\
  $(top_srcdir)/externals/SD/utility/SdInfo.h\
  $(top_srcdir)/externals/SD/utility/SdVolume.cpp
 
-libTouchscreen_a_SOURCES =\
- $(top_srcdir)/externals/Touchscreen/TouchScreen.cpp\
- $(top_srcdir)/externals/Touchscreen/TouchScreen.h
+libTouchScreen_a_SOURCES =\
+ $(top_srcdir)/externals/TouchScreen/TouchScreen.cpp\
+ $(top_srcdir)/externals/TouchScreen/TouchScreen.h
 
 SUFFIXES = .hex .lst
 

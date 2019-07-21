@@ -1,6 +1,6 @@
 #include <WProgram.h>
 //#include <i2c_t3.h>
-#include "data/guislice/guislice.ino"
+//#include "data/guislice/guislice.ino"
 
 extern "C" volatile uint32_t systick_millis_count;
 
@@ -25,7 +25,7 @@ int main(void)
   pinMode(TFT_CS, OUTPUT);
   digitalWrite(TFT_CS, HIGH);
 
-  setup();
+  //setup();
 
   while (1) {
     while (auto x = Serial.available()) {
@@ -35,7 +35,7 @@ int main(void)
     }
     //Serial.println("Teensy 3.2 GUI");
 
-    loop();
+    //loop();
 
 #if 0
     digitalWriteFast(LED_BUILTIN, HIGH);
