@@ -43,10 +43,12 @@ teensy32_touchscreen_gui_elf_LDADD =\
  libteensy3.a
 
 include ugfx.automake
-$(srcdir)/ugfx.automake: $(top_srcdir)/ugfx.mk
-	make -C $(top_srcdir) -f $< > $@
+$(srcdir)/ugfx.automake: $(abs_top_srcdir)/ugfx.mk
+	make -f $< -C $(top_srcdir) > $@.$$$$;\
+  cmp -s $@.$$$$ $@ || mv $@.$$$$ $@
 
-libugfx_a_SOURCES = $(UGFXSRC)
+libugfx_a_SOURCES = $(UGFXSRC)\
+ gfxconf.h
 libugfx_a_CPPFLAGS = $(UGFXDEFS)
 
 libi2c_t3_a_SOURCES =\
