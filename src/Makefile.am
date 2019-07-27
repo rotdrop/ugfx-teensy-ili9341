@@ -3,6 +3,8 @@ DEFS = @DEFS@
 LOADER = $(top_builddir)/tools/teensy-loader
 
 AM_CPPFLAGS = \
+ -I$(srcdir)/ugfx-bindings/\
+ -I$(top_srcdir)/externals/\
  -I$(top_srcdir)/externals/teensy-cores/teensy3\
  -I$(top_srcdir)/externals/i2c_t3\
  -I$(top_srcdir)/externals/GUIslice/src\
@@ -42,14 +44,14 @@ teensy32_touchscreen_gui_elf_LDADD =\
  libi2c-t3.a\
  libteensy3.a
 
-include ugfx.automake
-$(srcdir)/ugfx.automake: $(abs_top_srcdir)/ugfx.mk
+include ugfx-bindings/ugfx.automake
+$(srcdir)/ugfx/ugfx.automake: $(abs_top_srcdir)/ugfx.mk
 	make -f $< -C $(top_srcdir) > $@.$$$$;\
   cmp -s $@.$$$$ $@ || mv $@.$$$$ $@
 
 libugfx_a_SOURCES = $(UGFXSRC)\
- gfxconf.h
-libugfx_a_CPPFLAGS = $(UGFXDEFS)
+ ugfx-bindings/gfxconf.h
+libugfx_a_CPPFLAGS = $(UGFXDEFS) $(AM_CPPFLAGS)
 
 libi2c_t3_a_SOURCES =\
  $(top_srcdir)/externals/i2c_t3/i2c_t3.cpp\

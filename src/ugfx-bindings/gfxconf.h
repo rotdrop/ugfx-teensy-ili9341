@@ -39,7 +39,7 @@
 //#define GFX_USE_OS_OSX                               GFXOFF
 //#define GFX_USE_OS_ECOS                              GFXOFF
 //#define GFX_USE_OS_RAWRTOS                           GFXOFF
-//#define GFX_USE_OS_ARDUINO                           GFXOFF
+#define GFX_USE_OS_ARDUINO                           GFXON
 //#define GFX_USE_OS_KEIL                              GFXOFF
 //#define GFX_USE_OS_RTX5                              GFXOFF
 //#define GFX_USE_OS_CMSIS                             GFXOFF
@@ -73,12 +73,12 @@
 ///////////////////////////////////////////////////////////////////////////
 // GDISP                                                                 //
 ///////////////////////////////////////////////////////////////////////////
-//#define GFX_USE_GDISP                                GFXOFF
+#define GFX_USE_GDISP                                GFXON
 
 //#define GDISP_NEED_AUTOFLUSH                         GFXOFF
 //#define GDISP_NEED_TIMERFLUSH                        GFXOFF
-//#define GDISP_NEED_VALIDATION                        GFXON
-//#define GDISP_NEED_CLIP                              GFXON
+#define GDISP_NEED_VALIDATION                        GFXON
+#define GDISP_NEED_CLIP                              GFXON
 //#define GDISP_NEED_CIRCLE                            GFXOFF
 //#define GDISP_NEED_DUALCIRCLE                        GFXOFF
 //#define GDISP_NEED_ELLIPSE                           GFXOFF
