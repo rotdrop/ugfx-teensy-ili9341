@@ -1,7 +1,7 @@
 GFXLIB = externals/ugfx
 
 # OPT_OS = raw32
-GFXDRIVERS = gdisp/ILI9341
+# GFXDRIVERS = gdisp/ILI9341
 
 include $(GFXLIB)/gfx.mk
 
