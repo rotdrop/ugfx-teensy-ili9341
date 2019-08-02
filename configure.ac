@@ -121,7 +121,8 @@ ac_save_link=$ac_link
 ac_save_LIBS=$LIBS
 LIBS=$LIBS_FOR_BUILD
 ac_link='$CC_FOR_BUILD -o conftest$BUILD_EXEEXT $CFLAGS_FOR_BUILD $CPPFLAGS_FOR_BUILD $LDFLAGS_FOR_BUILD conftest.$ac_ext $LIBS >&5'
-AC_CHECK_LIB(usb, usb_open, [LIBS_FOR_BUILD="$LIBS_FOR_BUILD -lusb"])
+dnl AC_CHECK_LIB(usb, usb_open, [LIBS_FOR_BUILD="$LIBS_FOR_BUILD -lusb"])
+PKG_CHECK_MODULES([LIBUSB], [libusb])
 ac_link=$ac_save_link
 LIBS=$ac_save_LIBS
 AC_SUBST([LIBS_FOR_BUILD])
