@@ -396,6 +396,7 @@ typedef struct GDISPVMT {
 	void (*clear)(GDisplay *g);						// Uses p.color
 	void (*fill)(GDisplay *g);						// Uses p.x,p.y  p.cx,p.cy  p.color
 	void (*blit)(GDisplay *g);						// Uses p.x,p.y  p.cx,p.cy  p.x1,p.y1 (=srcx,srcy)  p.x2 (=srccx), p.ptr (=buffer)
+	void (*read)(GDisplay *g);						// Uses p.x,p.y  p.cx,p.cy,p.ptr (=buffer)
 	gColor (*get)(GDisplay *g);					// Uses p.x,p.y
 	void (*vscroll)(GDisplay *g);					// Uses p.x,p.y  p.cx,p.cy, p.y1 (=lines) p.color
 	void (*control)(GDisplay *g);					// Uses p.x (=what)  p.ptr (=value)
@@ -598,6 +599,21 @@ typedef struct GDISPVMT {
 		LLDSPEC	void gdisp_lld_blit_area(GDisplay *g);
 	#endif
 
+	#if GDISP_HARDWARE_READAREA
+		/**
+                 * @brief   Read an area into a bitmap
+                 * @pre		GDISP_HARDWARE_READAREA is GFXON
+                 *
+                 * @param[in]	g				The driver structure
+                 * @param[in]	g->p.x,g->p.y	The area position
+                 * @param[in]	g->p.cx,g->p.cy	The area size
+                 * @param[in]	g->p.ptr	The pointer to the bitmap
+                 *
+                 * @note		The parameter variables must not be altered by the driver.
+                 */
+          LLDSPEC	void gdisp_lld_read_area(GDisplay *g);
+	#endif
+
 	#if GDISP_HARDWARE_PIXELREAD || defined(__DOXYGEN__)
 		/**
 		 * @brief   Read a pixel from the display
@@ -692,6 +708,7 @@ typedef struct GDISPVMT {
 	#define gdisp_lld_clear(g)				gvmt(g)->clear(g)
 	#define gdisp_lld_fill_area(g)			gvmt(g)->fill(g)
 	#define gdisp_lld_blit_area(g)			gvmt(g)->blit(g)
+	#define gdisp_lld_read_area(g)			gvmt(g)->read(g)
 	#define gdisp_lld_get_pixel_color(g)	gvmt(g)->get(g)
 	#define gdisp_lld_vertical_scroll(g)	gvmt(g)->vscroll(g)
 	#define gdisp_lld_control(g)			gvmt(g)->control(g)
@@ -776,6 +793,11 @@ typedef struct GDISPVMT {
 		#endif
 		#if GDISP_HARDWARE_BITFILLS
 			gdisp_lld_blit_area,
+		#else
+			0,
+		#endif
+		#if GDISP_HARDWARE_READAREA
+			gdisp_lld_read_area,
 		#else
 			0,
 		#endif

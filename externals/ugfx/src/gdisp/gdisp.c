@@ -2705,7 +2705,25 @@ void gdispGBlitArea(GDisplay *g, gCoord x, gCoord y, gCoord cx, gCoord cy, gCoor
 
 							// Read one line of data from the screen
 
-							// Best line read is hardware streaming
+							// Best line read is reading an read from the display
+							#if GDISP_HARDWARE_READAREA
+								#if GDISP_HARDWARE_READAREA == HARDWARE_AUTODETECT
+									if (gvmt(g)->read)
+								#endif
+								{
+									g->p.x = x+ix;
+									g->p.y = fy+lines;
+									g->p.cx = fx;
+									g->p.cy = 1;
+                                                                        g->p.ptr = g->linebuf;
+                                                                        gdisp_lld_readarea(g);
+								}
+								#if GDISP_HARDWARE_STREAM_READ == HARDWARE_AUTODETECT
+									else
+								#endif
+							#endif
+
+							// Next best line read is hardware streaming
 							#if GDISP_HARDWARE_STREAM_READ
 								#if GDISP_HARDWARE_STREAM_READ == HARDWARE_AUTODETECT
 									if (gvmt(g)->readstart)
