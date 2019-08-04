@@ -7,10 +7,17 @@
 /* Driver hardware support.                                                  */
 /*===========================================================================*/
 
-#define GDISP_HARDWARE_STREAM_WRITE		GFXON
-#define GDISP_HARDWARE_STREAM_READ		GFXON
-#define GDISP_HARDWARE_CONTROL			GFXON
-#define GDISP_LLD_PIXELFORMAT			GDISP_PIXELFORMAT_RGB565
+#define GDISP_HARDWARE_STREAM_WRITE GFXON
+#define GDISP_HARDWARE_STREAM_READ  GFXON
+#define GDISP_HARWWARE_DRAWPIXEL    GFXON
+#define GDISP_HARDWARE_BITFILLS     GFXON
+#define GDISP_HARDWARE_READAREA     GFXON
+#define GDISP_HARDWARE_PIXELREAD    GFXON
+#define GDISP_HARDWARE_FILLS        GFXON
+#define GDISP_HARDWARE_CLEARS       GFXON
+#define GDISP_HARDWARE_CONTROL      GFXON
+
+#define GDISP_LLD_PIXELFORMAT       GDISP_PIXELFORMAT_RGB565
 
 #endif	/* GFX_USE_GDISP */
 

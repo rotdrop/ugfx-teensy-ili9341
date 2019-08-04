@@ -26,9 +26,8 @@ noinst_LIBRARIES = \
  libSPI.a\
  libSD.a\
  libTouchScreen.a\
- libILI9341_t3.a
-
-#libugfx.a
+ libILI9341_t3.a\
+ libugfx.a
 
 AM_CXXFLAGS = @MCU_FLAGS@ @MCU_SPECS@
 AM_CFLAGS = @MCU_FLAGS@ @MCU_SPECS@
@@ -42,18 +41,20 @@ teensy32_touchscreen_gui_elf_LDADD =\
  libSD.a\
  libTouchScreen.a\
  libi2c-t3.a\
- libteensy3.a
-# libugfx.a
+ libteensy3.a\
+ libugfx.a
 
 include ugfx-bindings/ugfx.automake
-$(srcdir)/ugfx/ugfx.automake: $(abs_top_srcdir)/ugfx.mk
+$(srcdir)/ugfx-bindings/ugfx.automake: $(abs_top_srcdir)/ugfx.mk
 	make -f $< -C $(top_srcdir) > $@.$$$$;\
   cmp -s $@.$$$$ $@ || mv $@.$$$$ $@
 
 libugfx_a_SOURCES = $(UGFXSRC)\
  ugfx-bindings/gfxconf.h\
- ugfx-bindings/board_ILI9341.cpp\
- ugfx-bindings/board_ILI9341.h
+ ugfx-bindings/gfx.h\
+ ugfx-bindings/gdisp_lld_config.h\
+ ugfx-bindings/gdisp_lld_ILI9341.cpp\
+ ugfx-bindings/gdisp_lld_ILI9341_vmt.c
 libugfx_a_CPPFLAGS = $(UGFXDEFS) $(AM_CPPFLAGS)
 
 libi2c_t3_a_SOURCES =\

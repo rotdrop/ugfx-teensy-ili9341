@@ -1,26 +1,25 @@
 #include <WProgram.h>
+#include "ILI9341-driver.hh"
 //#include <i2c_t3.h>
-//#include <ugfx/gfx.h>
+#include <ugfx/gfx.h>
 
 extern "C" volatile uint32_t systick_millis_count;
 
-// Memory
-#define MEM_LEN 256
-char databuf[MEM_LEN];
-int count;
-uint8_t target = 0x77; // target Slave address
+#define TFT_CS  10
+#define TFT_DC   9
+#define TFT_RST 26
+#define SD_CS   15
 
-#define TFT_CS 10
-#define SD_CS 15
+static ILI9341Driver tftDriver(TFT_CS, TFT_DC, TFT_RST);
 
 void setup()
 {
-#if 0
   coord_t               width, height;
   coord_t               i, j;
 
   // Initialize and clear the display
   gfxInit();
+#if 0
 
   // Get the screen size
   width = gdispGetWidth();
