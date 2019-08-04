@@ -5,7 +5,7 @@ AC_PREREQ(2.61)
 AC_INIT(teensy-touchscreen-gui, 0.1, himself@claus-justus-heine.de)
 AC_CONFIG_SRCDIR([src/main.cc])
 AC_CONFIG_HEADER([config.h])
-AM_INIT_AUTOMAKE([tar-ustar gnu 1.11 check-news dist-bzip2 dist-xz])
+AM_INIT_AUTOMAKE([tar-ustar gnu 1.11 check-news dist-bzip2 dist-xz subdir-objects])
 AM_MAINTAINER_MODE
 AC_CONFIG_MACRO_DIR([m4])
 _AC_SRCDIRS([.])
