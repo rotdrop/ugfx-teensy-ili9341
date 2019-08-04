@@ -25,7 +25,15 @@
 
 #if GFX_USE_OS_ARDUINO
 
+#ifdef __cplusplus
+}
+#endif
+
 #include <Arduino.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*===========================================================================*/
 /* Type definitions                                                          */
