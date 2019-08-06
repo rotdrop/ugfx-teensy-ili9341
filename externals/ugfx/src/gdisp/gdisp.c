@@ -2716,7 +2716,7 @@ void gdispGBlitArea(GDisplay *g, gCoord x, gCoord y, gCoord cx, gCoord cy, gCoor
 									g->p.cx = fx;
 									g->p.cy = 1;
                                                                         g->p.ptr = g->linebuf;
-                                                                        gdisp_lld_readarea(g);
+                                                                        gdisp_lld_read_area(g);
 								}
 								#if GDISP_HARDWARE_STREAM_READ == HARDWARE_AUTODETECT
 									else
