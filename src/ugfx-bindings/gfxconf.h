@@ -85,9 +85,9 @@
 //#define GDISP_NEED_ARC                               GFXOFF
 //#define GDISP_NEED_ARCSECTORS                        GFXOFF
 //#define GDISP_NEED_CONVEX_POLYGON                    GFXOFF
-//#define GDISP_NEED_SCROLL                            GFXOFF
-//#define GDISP_NEED_PIXELREAD                         GFXOFF
-//#define GDISP_NEED_CONTROL                           GFXOFF
+#define GDISP_NEED_SCROLL                            GFXON
+#define GDISP_NEED_PIXELREAD                         GFXON
+#define GDISP_NEED_CONTROL                           GFXON
 //#define GDISP_NEED_QUERY                             GFXOFF
 //#define GDISP_NEED_MULTITHREAD                       GFXOFF
 //#define GDISP_NEED_STREAMING                         GFXOFF

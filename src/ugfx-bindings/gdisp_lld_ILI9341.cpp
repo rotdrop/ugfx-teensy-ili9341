@@ -323,20 +323,6 @@ LLDSPEC	gColor gdisp_lld_get_pixel_color(GDisplay *g)
 LLDSPEC	void gdisp_lld_vertical_scroll(GDisplay *g);
 #endif
 
-#if (GDISP_HARDWARE_CONTROL && GDISP_NEED_CONTROL)
-/**
- * @brief   Control some feature of the hardware
- * @pre		GDISP_HARDWARE_CONTROL is GFXON (and the application needs it)
- *
- * @param[in]	g				The driver structure
- * @param[in]	g->p.x			The operation to perform
- * @param[in]	g->p.ptr		The operation parameter
- *
- * @note		The parameter variables must not be altered by the driver.
- */
-LLDSPEC	void gdisp_lld_control(GDisplay *g);
-#endif
-
 #if (GDISP_HARDWARE_QUERY && GDISP_NEED_QUERY)
 /**
  * @brief   Query some feature of the hardware
@@ -365,69 +351,71 @@ LLDSPEC	void *gdisp_lld_query(GDisplay *g);				// Uses p.x (=what);
 LLDSPEC	void gdisp_lld_set_clip(GDisplay *g);
 #endif
 
-#if GDISP_NEED_CONTROL && GDISP_HARDWARE_CONTROL
+#if (GDISP_HARDWARE_CONTROL && GDISP_NEED_CONTROL)
+/**
+ * @brief   Control some feature of the hardware
+ * @pre		GDISP_HARDWARE_CONTROL is GFXON (and the application needs it)
+ *
+ * @param[in]	g				The driver structure
+ * @param[in]	g->p.x			The operation to perform
+ * @param[in]	g->p.ptr		The operation parameter
+ *
+ * @note		The parameter variables must not be altered by the driver.
+ */
 LLDSPEC void gdisp_lld_control(GDisplay *g) {
   switch(g->p.x) {
-  case GDISP_CONTROL_POWER:
-    if (g->g.Powermode == (gPowermode)g->p.ptr)
+  case GDISP_CONTROL_POWER: {
+    gPowermode requestedMode = (gPowermode)(uint32_t)g->p.ptr;
+    if (g->g.Powermode == requestedMode)
       return;
-    switch((gPowermode)g->p.ptr) {
+    switch(requestedMode) {
     case gPowerOff:
     case gPowerSleep:
     case gPowerDeepSleep:
-      acquire_bus(g);
-      write_reg(g, 0x0010, 0x0001);	/* enter sleep mode */
-      release_bus(g);
+      getDriver(g).sleep(true);
       break;
     case gPowerOn:
-      acquire_bus(g);
-      write_reg(g, 0x0010, 0x0000);	/* leave sleep mode */
-      release_bus(g);
+      getDriver(g).sleep(false);
       break;
     default:
       return;
     }
-    g->g.Powermode = (gPowermode)g->p.ptr;
+    g->g.Powermode = requestedMode;
     return;
-
-  case GDISP_CONTROL_ORIENTATION:
-    if (g->g.Orientation == (gOrientation)g->p.ptr)
+  }
+  case GDISP_CONTROL_ORIENTATION: {
+    gOrientation requestedOrientation = (gOrientation)(uint32_t)g->p.ptr;
+    if (g->g.Orientation == requestedOrientation)
       return;
-    switch((gOrientation)g->p.ptr) {
+    switch(requestedOrientation) {
     case gOrientation0:
-      acquire_bus(g);
-      write_reg(g, 0x36, 0x48);	/* X and Y axes non-inverted */
-      release_bus(g);
+      getDriver(g).setRotation(0);
       g->g.Height = GDISP_SCREEN_HEIGHT;
       g->g.Width = GDISP_SCREEN_WIDTH;
       break;
     case gOrientation90:
-      acquire_bus(g);
-      write_reg(g, 0x36, 0xE8);	/* Invert X and Y axes */
-      release_bus(g);
+      getDriver(g).setRotation(1);
       g->g.Height = GDISP_SCREEN_WIDTH;
       g->g.Width = GDISP_SCREEN_HEIGHT;
       break;
     case gOrientation180:
-      acquire_bus(g);
-      write_reg(g, 0x36, 0x88);		/* X and Y axes non-inverted */
-      release_bus(g);
+      getDriver(g).setRotation(2);
       g->g.Height = GDISP_SCREEN_HEIGHT;
       g->g.Width = GDISP_SCREEN_WIDTH;
       break;
     case gOrientation270:
-      acquire_bus(g);
-      write_reg(g, 0x36, 0x28);	/* Invert X and Y axes */
-      release_bus(g);
+      getDriver(g).setRotation(2);
       g->g.Height = GDISP_SCREEN_WIDTH;
       g->g.Width = GDISP_SCREEN_HEIGHT;
       break;
     default:
       return;
     }
-    g->g.Orientation = (gOrientation)g->p.ptr;
+    g->g.Orientation = requestedOrientation;
     return;
+  }
 
+#if 0
   case GDISP_CONTROL_BACKLIGHT:
     if ((unsigned)g->p.ptr > 100)
       g->p.ptr = (void *)100;
@@ -436,6 +424,7 @@ LLDSPEC void gdisp_lld_control(GDisplay *g) {
     return;
 
     //case GDISP_CONTROL_CONTRAST:
+#endif
   default:
     return;
   }

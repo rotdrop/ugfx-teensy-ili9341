@@ -23,6 +23,8 @@ class ILI9341Driver
   using BaseType::readRect;
   using BaseType::fillRect;
   using BaseType::fillScreen;
+  using BaseType::sleep;
+  using BaseType::setRotation;
 
   void startWrite(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
     SPI.beginTransaction(SPISettings(SPICLOCK, MSBFIRST, SPI_MODE0));
