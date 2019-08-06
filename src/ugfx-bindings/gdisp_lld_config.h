@@ -7,6 +7,9 @@
 /* Driver hardware support.                                                  */
 /*===========================================================================*/
 
+#define GDISP_PIN_RST 255
+#define GDISP_PIN_LED 255
+
 #define GDISP_HARDWARE_STREAM_WRITE GFXON
 #define GDISP_HARDWARE_STREAM_READ  GFXON
 #define GDISP_HARWWARE_DRAWPIXEL    GFXON
