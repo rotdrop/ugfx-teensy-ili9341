@@ -16,7 +16,16 @@ class ILI9341Driver
 //#define SPICLOCK 30000000
   static constexpr uint32_t SPICLOCK = 3000000;
  public:
-  using BaseType::ILI9341_t3;
+  ILI9341Driver(uint8_t _CS, uint8_t _DC, uint8_t _RST = 255, uint8_t _LED = 255, uint8_t _MOSI=11, uint8_t _SCLK=13, uint8_t _MISO=12)
+    : BaseType(_CS, _DC, _RST, _MOSI, _SCLK, _MISO)
+    , _led(_LED)
+  {
+    if (_led != 255) {
+      pinMode(_led, OUTPUT);
+      setBacklight(100);
+    }
+  }
+
   using BaseType::begin;
   using BaseType::drawPixel;
   using BaseType::readPixel;
@@ -25,6 +34,10 @@ class ILI9341Driver
   using BaseType::fillScreen;
   using BaseType::sleep;
   using BaseType::setRotation;
+
+  void setBacklight(uint8_t percent) {
+    analogWrite(_led, map(percent, 0, 100, 0, 255));
+  }
 
   void startWrite(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
     SPI.beginTransaction(SPISettings(SPICLOCK, MSBFIRST, SPI_MODE0));
@@ -36,7 +49,7 @@ class ILI9341Driver
   void pushColor(uint16_t color) {
     writeData16(color);
   }
-  
+
   void endWrite() {
     if (popLast == 16) {
       writedata16_last(lastWrite16);
@@ -47,7 +60,7 @@ class ILI9341Driver
   void startRead(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
     uint8_t dummy __attribute__((unused));
     SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
-    setAddr(x0, y0, x1, y1);    
+    setAddr(x0, y0, x1, y1);
     writecommand_cont(ILI9341_RAMRD); // read from RAM
     waitTransmitComplete();
     KINETISK_SPI0.PUSHR = 0 | (pcs_data << 16) | SPI_PUSHR_CTAS(0)| SPI_PUSHR_CONT | SPI_PUSHR_EOQ;
@@ -57,7 +70,7 @@ class ILI9341Driver
       dummy = KINETISK_SPI0.POPR;	// Read a DUMMY byte but only once
     }
   }
-  
+
   uint16_t readColor() {
     // like waitFifoNotFull but does not pop our return queue
     while ((KINETISK_SPI0.SR & (15 << 12)) > (3 << 12)) ;
@@ -65,12 +78,12 @@ class ILI9341Driver
     KINETISK_SPI0.PUSHR = 0 | (pcs_data << 16) | SPI_PUSHR_CTAS(0)| SPI_PUSHR_CONT;
     KINETISK_SPI0.PUSHR = 0 | (pcs_data << 16) | SPI_PUSHR_CTAS(0)| SPI_PUSHR_CONT;
     KINETISK_SPI0.PUSHR = 0 | (pcs_data << 16) | SPI_PUSHR_CTAS(0)| SPI_PUSHR_CONT;
-    
+
     while ((KINETISK_SPI0.SR & 0xf0) < 0x30); // do we have at least 3 bytes in queue if so extract...
     uint8_t r = KINETISK_SPI0.POPR;		// Read a RED byte of GRAM
     uint8_t g = KINETISK_SPI0.POPR;		// Read a GREEN byte of GRAM
     uint8_t b = KINETISK_SPI0.POPR;		// Read a BLUE byte of GRAM
-    
+
     return color565(r,g,b);
   }
 
@@ -115,7 +128,8 @@ class ILI9341Driver
     popLast = 16;
     lastWrite16 = d;
   }
-  
+
+  uint8_t _led;
  private:
   int popLast;
   uint8_t lastWrite8;

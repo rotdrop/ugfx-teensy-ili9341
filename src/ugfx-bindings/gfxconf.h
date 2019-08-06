@@ -354,7 +354,7 @@
 //#define GMISC_NEED_ARRAYOPS                          GFXOFF
 //#define GMISC_NEED_FASTTRIG                          GFXOFF
 //#define GMISC_NEED_FIXEDTRIG                         GFXOFF
-//#define GMISC_NEED_INVSQRT                           GFXOFF
+//#define GMISC_NEED_INVSQRT                           GFOXFF
 //    #define GMISC_INVSQRT_MIXED_ENDIAN               GFXOFF
 //    #define GMISC_INVSQRT_REAL_SLOW                  GFXOFF
 //#define GMISC_NEED_MATRIXFLOAT2D                     GFXOFF

@@ -69,7 +69,7 @@ LLDSPEC gBool gdisp_lld_init(GDisplay *g)
   }
 
   // Initialise the board interface
-  switch(g->controllerdisplay) {		
+  switch(g->controllerdisplay) {
   case 0:
     // Setup display 1
     int8_t rst=-1, led=-1;
@@ -79,12 +79,12 @@ LLDSPEC gBool gdisp_lld_init(GDisplay *g)
 #ifdef GDISP_PIN_LED
     led = GDISP_PIN_LED;
 #endif
-    auto& board = *new ILI9341Driver(GDISP_PIN_CS, GDISP_PIN_DC);// uint8_t _RST = 255, uint8_t _MOSI=11, uint8_t _SCLK=13, uint8_t _MISO=12);
-    board.begin();    
+    auto& board = *new ILI9341Driver(GDISP_PIN_CS, GDISP_PIN_DC, rst, led);//, uint8_t _MOSI=11, uint8_t _SCLK=13, uint8_t _MISO=12);
+    board.begin();
     g->board = &board;
     break;
   }
-  
+
   return gTrue;
 }
 
@@ -165,7 +165,7 @@ LLDSPEC	void gdisp_lld_write_pos(GDisplay *g);
  */
 LLDSPEC	void gdisp_lld_read_start(GDisplay *g)
 {
-  getDriver(g).startRead(g->p.x, g->p.y, g->p.x + g->p.cx - 1, g->p.y + g->p.cy - 1);  
+  getDriver(g).startRead(g->p.x, g->p.y, g->p.x + g->p.cx - 1, g->p.y + g->p.cy - 1);
 }
 
 /**
@@ -225,7 +225,7 @@ LLDSPEC	void gdisp_lld_draw_pixel(GDisplay *g)
  */
 LLDSPEC	void gdisp_lld_clear(GDisplay *g)
 {
-  getDriver(g).fillScreen(g->p.color);  
+  getDriver(g).fillScreen(g->p.color);
 }
 #endif
 
@@ -243,7 +243,7 @@ LLDSPEC	void gdisp_lld_clear(GDisplay *g)
  */
 LLDSPEC	void gdisp_lld_fill_area(GDisplay *g)
 {
-  getDriver(g).fillRect(g->p.x, g->p.y, g->p.cx, g->p.cy, g->p.color);  
+  getDriver(g).fillRect(g->p.x, g->p.y, g->p.cx, g->p.cy, g->p.color);
 }
 #endif
 
@@ -414,17 +414,17 @@ LLDSPEC void gdisp_lld_control(GDisplay *g) {
     g->g.Orientation = requestedOrientation;
     return;
   }
-
-#if 0
-  case GDISP_CONTROL_BACKLIGHT:
-    if ((unsigned)g->p.ptr > 100)
-      g->p.ptr = (void *)100;
-    set_backlight(g, (unsigned)g->p.ptr);
-    g->g.Backlight = (unsigned)g->p.ptr;
+  case GDISP_CONTROL_BACKLIGHT: {
+    uint8_t requestedBacklight = (uint8_t)(uint32_t)g->p.ptr;
+    if (requestedBacklight > 100) {
+      requestedBacklight = 100;
+    }
+    getDriver(g).setBacklight(requestedBacklight);
+    g->g.Backlight = requestedBacklight;
     return;
+  }
 
     //case GDISP_CONTROL_CONTRAST:
-#endif
   default:
     return;
   }
@@ -472,4 +472,3 @@ Optional Routines:
 // c-basic-offset: 2 ***
 // indent-tabs-mode: nil ***
 // End: ***
-
