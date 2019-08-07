@@ -41,7 +41,9 @@ const GMouseVMT GMOUSE_DRIVER_VMT[1] = {{
 		GMOUSE_MCU_FINGER_MOVE_ERROR			// move
 	},
 	init_board,		// init
-	0,				// deinit
+#if GMOUSE_MCU_BOARD_DEINIT
+        deinit_board, // deinit
+#endif
 	read_xyz,		// get
 	0,				// calsave
 	0				// calload

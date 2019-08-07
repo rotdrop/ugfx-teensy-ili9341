@@ -26,6 +26,11 @@
 static gBool init_board(GMouse *m, unsigned driverinstance) {
 }
 
+#if GMOUSE_MCU_BOARD_DEINIT
+static void deinit_board(GMouse *m) {
+}
+#endif
+
 static gBool read_xyz(GMouse *m, GMouseReading *prd) {
 }
 

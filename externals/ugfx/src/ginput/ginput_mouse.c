@@ -731,8 +731,13 @@ void _gmousePostInitDriver(GDriver *g) {
     #undef m
 }
 
-void _gmouseDeInitDriver(GDriver *g) {
-    (void) g;
+void _gmouseDeInitDriver(GDriver *g)
+{
+#define m ((GMouse *)g)
+  if (gmvmt(m)->deinit) {
+    gmvmt(m)->deinit(m);
+  }
+#undef m
 }
 
 GSourceHandle ginputGetMouse(unsigned instance) {
