@@ -36,13 +36,13 @@ AM_LDFLAGS = @MCU_LDFLAGS@ -T"$(MCU_LDSCRIPT)"
 teensy32_touchscreen_gui_elf_SOURCES =\
  main.cc
 teensy32_touchscreen_gui_elf_LDADD =\
+ libugfx.a\
  libILI9341_t3.a\
  libSPI.a\
  libSD.a\
  libTouchScreen.a\
  libi2c-t3.a\
- libteensy3.a\
- libugfx.a
+ libteensy3.a
 
 include ugfx-bindings/ugfx.automake
 $(srcdir)/ugfx-bindings/ugfx.automake: $(abs_top_srcdir)/ugfx.mk
@@ -54,7 +54,8 @@ libugfx_a_SOURCES = $(UGFXSRC)\
  ugfx-bindings/gfx.h\
  ugfx-bindings/gdisp_lld_config.h\
  ugfx-bindings/gdisp_lld_ILI9341.cpp\
- ugfx-bindings/gdisp_lld_ILI9341_vmt.c
+ ugfx-bindings/gdisp_lld_ILI9341_vmt.c\
+ ugfx-bindings/gmouse_lld_MCU_board.cpp\
 libugfx_a_CPPFLAGS = $(UGFXDEFS) $(AM_CPPFLAGS)
 
 libi2c_t3_a_SOURCES =\

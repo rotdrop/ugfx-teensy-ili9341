@@ -2,6 +2,7 @@ GFXLIB = externals/ugfx
 
 # OPT_OS = raw32
 # GFXDRIVERS = gdisp/ILI9341
+GFXDRIVERS = ginput/touch/MCU
 
 include $(GFXLIB)/gfx.mk
 
