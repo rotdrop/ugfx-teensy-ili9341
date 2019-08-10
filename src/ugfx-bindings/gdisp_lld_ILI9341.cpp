@@ -7,6 +7,7 @@
 
 #include "gfx.h"
 #include "ILI9341-driver.hh"
+#include "../pinconf.h"
 
 #if GFX_USE_GDISP
 
@@ -50,9 +51,6 @@ static ILI9341Driver& getDriver(GDisplay *g)
   return *(ILI9341Driver *)g->board;
 }
 
-#define GDISP_PIN_CS  10
-#define GDISP_PIN_DC   9
-
 /**
  * @brief   Initialize the driver.
  * @return	gTrue if successful.
@@ -73,13 +71,13 @@ LLDSPEC gBool gdisp_lld_init(GDisplay *g)
   case 0:
     // Setup display 1
     int8_t rst=-1, led=-1;
-#ifdef GDISP_PIN_RST
+#ifdef PIN_TFT_RST
     rst = GDISP_PIN_RST;
 #endif
-#ifdef GDISP_PIN_LED
-    led = GDISP_PIN_LED;
+#ifdef PIN_TFT_LED
+    led = PIN_TFT_LED;
 #endif
-    auto& board = *new ILI9341Driver(GDISP_PIN_CS, GDISP_PIN_DC, rst, led);//, uint8_t _MOSI=11, uint8_t _SCLK=13, uint8_t _MISO=12);
+    auto& board = *new ILI9341Driver(PIN_TFT_CS, PIN_TFT_DC, rst, led);//, uint8_t _MOSI=11, uint8_t _SCLK=13, uint8_t _MISO=12);
     board.begin();
     g->board = &board;
     break;

@@ -1,5 +1,6 @@
 #include <TouchScreen.h>
 #include "gmouse_lld_MCU_board.h"
+#include "../pinconf.h"
 
 struct GMouseTouchScreenDriver
   : GMouse
@@ -17,7 +18,7 @@ gBool init_board(GMouse *m, unsigned driverInstance)
 
   auto& board = static_cast<GMouseTouchScreenDriver&>(*m);
 
-  board.driver = new TouchScreen(0, 0, 0, 0, 0);
+  board.driver = new TouchScreen(PIN_4WIRETOUCH_XP, PIN_4WIRETOUCH_YP, PIN_4WIRETOUCH_XM, PIN_4WIRETOUCH_YM, RX_4WIRETOUCH);
   
   return gFalse;
 }
